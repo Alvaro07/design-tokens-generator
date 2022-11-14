@@ -1,2 +1,2 @@
 # spotymix
-Your spotify list mixer app, developed with Vite and Vue3
+Your spotify list mixer app, developed with Vite , Typescript and Vue3
