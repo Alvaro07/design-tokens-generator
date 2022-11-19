@@ -1,10 +1,18 @@
 <script setup lang="ts">
-// import TheWelcome from "../components/TheWelcome.vue";
+import SpButton from '@/components/sp-button/SpButton.vue'
 </script>
 
 <template>
-  <main>
-    Home
-    <div class="text-4xl">Hello 👋🏼</div>
+  <main class="app-wrap">
+    <sp-button>Soy un botón</sp-button>
   </main>
 </template>
+
+<style lang="scss">
+.app-wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  place-content: center;
+}
+</style>
