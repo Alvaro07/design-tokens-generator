@@ -1,0 +1,21 @@
+.custom-dialog {
+  .el-dialog__header,
+  .el-dialog__footer {
+    background-color: var(--color-light-grey);
+    margin: 0;
+    padding: 12px 24px;
+  }
+
+  .el-dialog__title {
+    font-weight: 700;
+    font-family: var(--secondary-font);
+  }
+
+  .el-form-item {
+    display: block;
+  }
+
+  .el-form-item__label {
+    font-weight: 600;
+  }
+}

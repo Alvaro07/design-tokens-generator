@@ -1,18 +1,27 @@
 <script setup lang="ts">
-import SpButton from '@/components/sp-button/SpButton.vue'
+import Header from '@/components/header/Header.vue'
+import ThemesTabs from '@/components/themes-tabs/ThemesTabs.vue'
 </script>
 
 <template>
   <main class="app-wrap">
-    <sp-button>Soy un botón</sp-button>
+    <Header />
+    <ThemesTabs />
   </main>
+  <RouterView />
 </template>
 
 <style lang="scss">
 .app-wrap {
   width: 100%;
+  max-width: 1280px;
   height: 100vh;
-  display: flex;
-  place-content: center;
+
+  padding: 24px;
+  margin: 0 auto;
+
+  background-color: var(--color-light-grey);
+  border: 12px solid white;
+  border-radius: 24px;
 }
 </style>
