@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { react } from '@babel/types'
-import { ref, reactive } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useThemeStore } from '../../stores/themes'
 
 const router = useRouter()
+const store = useThemeStore()
+
 const dialogVisible = ref(true)
-const formData = reactive({
-  name: '',
-})
+const themeName = ref('')
+
+const repeatNameTheme = computed(() =>
+  store.themes.some((theme) => theme.title === themeName.value),
+)
 
 function addTheme() {
-  router.push({ name: 'home', params: { name: formData.name } })
+  store.addTheme({ title: themeName })
+  router.push({ name: 'home' })
 }
 </script>
 
@@ -22,9 +27,10 @@ function addTheme() {
     :show-close="false"
     align-center
     class="custom-dialog">
-    <el-form :model="formData">
+    <el-form>
       <el-form-item label="Theme name:">
-        <el-input v-model="formData.name" />
+        <el-input v-model="themeName" />
+        <p v-if="repeatNameTheme">Name no allowed repeat</p>
       </el-form-item>
     </el-form>
 
@@ -33,7 +39,7 @@ function addTheme() {
         <el-button @click="router.push({ name: 'home' })">Cancel</el-button>
         <el-button
           type="primary"
-          :disabled="!formData.name.length"
+          :disabled="!themeName.length || repeatNameTheme"
           @click="addTheme">
           Confirm
         </el-button>
