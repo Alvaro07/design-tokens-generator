@@ -14,7 +14,6 @@ import ThemesTabs from '@/components/themes-tabs/ThemesTabs.vue'
 <style lang="scss">
 .app-wrap {
   width: 100%;
-  max-width: 1280px;
   height: 100vh;
 
   padding: 24px;
