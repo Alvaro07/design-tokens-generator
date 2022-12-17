@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useThemeStore } from '@/stores/themes'
 
 const router = useRouter()
+const store = useThemeStore()
 
 function createFirstTheme() {
   router.push({ name: 'add-theme' })
@@ -16,7 +18,11 @@ function createFirstTheme() {
       assigning the value live and exporting to the format you want, being able
       to create the themes you want, and infinite values.
     </p>
-    <el-button type="primary" plain @click="createFirstTheme">
+    <el-button
+      type="primary"
+      plain
+      @click="createFirstTheme"
+      :disabled="store.themes.length > 0">
       Create theme
     </el-button>
   </header>

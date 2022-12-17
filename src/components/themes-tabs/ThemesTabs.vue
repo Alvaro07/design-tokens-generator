@@ -15,16 +15,67 @@ const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
 </script>
 
 <template>
-  <el-tabs
-    v-if="store.themes.length"
-    v-model="store.activeTheme"
-    type="border-card"
-    editable
-    @edit="handleTabsEdit">
-    <el-tab-pane
-      v-for="{ name, title } in store.themes"
-      :key="name"
-      :label="title"
-      :name="name" />
-  </el-tabs>
+  <main class="main-wrap">
+    <el-tabs
+      v-if="store.themes.length"
+      v-model="store.activeTheme"
+      type="border-card"
+      editable
+      @edit="handleTabsEdit">
+      <el-tab-pane
+        v-for="(Theme, index) in store.themes"
+        :key="Theme.name"
+        :label="Theme.title"
+        :name="Theme.name">
+        <section class="theme-content">
+          <main>
+            <ul>
+              <li
+                v-for="(property, i) in Object.entries(Theme.properties)"
+                :key="i"
+                class="theme-content__item">
+                <el-input
+                  placeholder="Name"
+                  v-model="store.themes[index].properties[property[0]].name"
+                  :disabled="index !== 0" />
+                <el-input
+                  placeholder="Value"
+                  v-model="store.themes[index].properties[property[0]].value" />
+              </li>
+            </ul>
+            <div class="theme-content__actions" v-if="index === 0">
+              <el-button type="primary" @click="store.addProperty">
+                Add property
+              </el-button>
+            </div>
+          </main>
+        </section>
+      </el-tab-pane>
+    </el-tabs>
+  </main>
 </template>
+
+<style scope lang="scss">
+.main-wrap {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.theme-content {
+  &__actions {
+    text-align: center;
+  }
+
+  &__item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  // &__title {
+  //   font-size: rem(16);
+  //   font-family: var(--secondary-font);
+  // }
+}
+</style>

@@ -27,12 +27,13 @@ function addTheme() {
     :show-close="false"
     align-center
     class="custom-dialog">
-    <el-form>
-      <el-form-item label="Theme name:">
-        <el-input v-model="themeName" />
-        <p v-if="repeatNameTheme">Name no allowed repeat</p>
-      </el-form-item>
-    </el-form>
+    <div class="add-theme-form">
+      <label class="add-theme-form__label">Theme name:</label>
+      <el-input v-model="themeName" />
+      <p class="add-theme-form__error" v-if="repeatNameTheme">
+        Name no allowed repeat
+      </p>
+    </div>
 
     <template #footer>
       <span class="dialog-footer">
@@ -48,4 +49,21 @@ function addTheme() {
   </el-dialog>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.add-theme-form {
+  position: relative;
+
+  &__label {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: rem(12);
+  }
+
+  &__error {
+    position: absolute;
+    top: calc(100% + 6px);
+    font-size: rem(10);
+    color: var(--color-error);
+  }
+}
+</style>
