@@ -25,6 +25,7 @@ function createFirstTheme() {
       :disabled="store.themes.length > 0">
       Create theme
     </el-button>
+    <el-button :disabled="store.themes.length > 0">Import json</el-button>
   </header>
 </template>
 
