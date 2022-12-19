@@ -16,6 +16,7 @@
     "pinia": "^2.0.23",
     "uuid": "^9.0.0",
     "vue": "^3.2.41",
+    "vue-code-highlight": "^0.7.8",
     "vue-router": "^4.1.5"
   },
   "devDependencies": {
