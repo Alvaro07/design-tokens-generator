@@ -27,10 +27,7 @@ export const useThemeStore = defineStore('Themes', {
 
       if (!isFirst) {
         for (const prop in this.themes[0].properties) {
-          const uid = uuidv4()
-
-          newProperties[uid] = {
-            name: this.themes[0].properties[prop].name,
+          newProperties[prop] = {
             value: '',
           }
         }
@@ -66,7 +63,10 @@ export const useThemeStore = defineStore('Themes', {
       const uid = uuidv4()
       this.themes = this.themes.map((e) => ({
         ...e,
-        properties: { ...e.properties, [uid]: { name: '', value: '' } },
+        properties: {
+          ...e.properties,
+          [uid]: { name: '', value: '', type: 'css' },
+        },
       }))
     },
   },

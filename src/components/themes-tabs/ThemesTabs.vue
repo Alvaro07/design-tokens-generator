@@ -1,9 +1,20 @@
 <script setup lang="ts">
+import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useThemeStore } from '../../stores/themes'
 
 const router = useRouter()
 const store = useThemeStore()
+const options = reactive([
+  {
+    value: 'css',
+    label: 'custom properties',
+  },
+  {
+    value: 'scss',
+    label: 'scss',
+  },
+])
 
 const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
   if (action === 'add') {
@@ -36,11 +47,20 @@ const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
                 class="theme-content__item">
                 <el-input
                   placeholder="Name"
-                  v-model="store.themes[index].properties[property[0]].name"
+                  v-model="store.themes[0].properties[property[0]].name"
                   :disabled="index !== 0" />
                 <el-input
                   placeholder="Value"
                   v-model="store.themes[index].properties[property[0]].value" />
+                <el-select
+                  v-model="store.themes[0].properties[property[0]].type"
+                  :disabled="index !== 0">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"></el-option>
+                </el-select>
               </li>
             </ul>
             <div class="theme-content__actions" v-if="index === 0">
@@ -71,6 +91,10 @@ const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
     display: flex;
     gap: 12px;
     margin-bottom: 12px;
+
+    & > div {
+      flex: 1;
+    }
   }
 
   // &__title {
