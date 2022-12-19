@@ -1,20 +1,22 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import CodeHighlight from 'vue-code-highlight/src/CodeHighlight.vue'
 import 'vue-code-highlight/themes/prism-tomorrow.css'
 import { useThemeStore } from '@/stores/themes'
 
 const store = useThemeStore()
+const hasProperties = computed(
+  () => Object.values(store.themes[0].properties).length,
+)
 </script>
 
 <template>
   <section class="code-block" v-if="store.themes.length">
     <div class="code-block__actions">
-      <el-button
-        type="success"
-        :disabled="!Object.values(store.themes[0].properties).length">
+      <el-button type="success" :disabled="!hasProperties">
         Generate code
       </el-button>
-      <el-button type="info" disabled>Export json</el-button>
+      <el-button :disabled="!hasProperties">Export json</el-button>
     </div>
 
     <!-- prettier-ignore -->
