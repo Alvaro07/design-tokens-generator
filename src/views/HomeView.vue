@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CodeBlock from '@/components/code-block/CodeBlock.vue'
 import Header from '@/components/header/Header.vue'
 import ThemesTabs from '@/components/themes-tabs/ThemesTabs.vue'
 </script>
@@ -7,6 +8,7 @@ import ThemesTabs from '@/components/themes-tabs/ThemesTabs.vue'
   <main class="app-wrap">
     <Header />
     <ThemesTabs />
+    <CodeBlock />
   </main>
   <RouterView />
 </template>

@@ -28,3 +28,12 @@
 .el-tabs__new-tab {
   margin-right: 10px;
 }
+
+.icon-link {
+  cursor: pointer;
+  transition: 0.3s all ease;
+
+  &:hover {
+    color: var(--color-txt-interactive);
+  }
+}

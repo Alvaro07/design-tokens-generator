@@ -69,5 +69,9 @@ export const useThemeStore = defineStore('Themes', {
         },
       }))
     },
+
+    removeProperty(prop: string) {
+      this.themes.forEach((theme) => delete theme.properties[prop])
+    },
   },
 })

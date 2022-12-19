@@ -61,6 +61,11 @@ const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
                     :label="item.label"
                     :value="item.value"></el-option>
                 </el-select>
+                <el-icon
+                  class="icon-link"
+                  @click="store.removeProperty(property[0])">
+                  <Delete />
+                </el-icon>
               </li>
             </ul>
             <div class="theme-content__actions" v-if="index === 0">
@@ -89,6 +94,7 @@ const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
 
   &__item {
     display: flex;
+    align-items: center;
     gap: 12px;
     margin-bottom: 12px;
 
@@ -96,10 +102,5 @@ const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
       flex: 1;
     }
   }
-
-  // &__title {
-  //   font-size: rem(16);
-  //   font-family: var(--secondary-font);
-  // }
 }
 </style>
