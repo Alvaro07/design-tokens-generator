@@ -102,5 +102,9 @@ const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
       flex: 1;
     }
   }
+
+  &__var-icon.el-icon {
+    color: var(--color-medium-grey);
+  }
 }
 </style>

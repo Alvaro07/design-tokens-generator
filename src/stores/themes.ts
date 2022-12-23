@@ -29,6 +29,7 @@ export const useThemeStore = defineStore('Themes', {
         for (const prop in this.themes[0].properties) {
           newProperties[prop] = {
             value: '',
+            type: 'css',
           }
         }
       }
@@ -73,5 +74,35 @@ export const useThemeStore = defineStore('Themes', {
     removeProperty(prop: string) {
       this.themes.forEach((theme) => delete theme.properties[prop])
     },
+  },
+
+  getters: {
+    themesParseCode(state) {
+      const code = state.themes.map((theme) => ({
+        name: theme.name,
+        properties: Object.values(theme.properties),
+      }))
+
+      return code
+    },
+    // cssCode(state) {
+    //   const code = state.themes.map((theme) => ({
+    //     name: theme.name,
+    //     properties: Object.values(state.themes[0].properties)
+    //       .map(
+    //         (prop: any) =>
+    //           prop.name && prop.type === 'css' && `${prop.name}: ${prop.value}`,
+    //       )
+    //       .filter(Boolean),
+    //   }))
+    //   return code
+    // },
+    // sassCode(state) {
+    //   const code = Object.values(state.themes[0].properties).map(
+    //     (prop: any) =>
+    //       prop.name && prop.type === 'scss' && `${prop.name}: ${prop.value}`,
+    //   )
+    //   return code.filter(Boolean)
+    // },
   },
 })

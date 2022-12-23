@@ -25,7 +25,7 @@ function createFirstTheme() {
       :disabled="store.themes.length > 0">
       Create theme
     </el-button>
-    <el-button :disabled="store.themes.length > 0">Import json</el-button>
+    <!-- <el-button :disabled="store.themes.length > 0">Import json</el-button> -->
   </header>
 </template>
 
@@ -50,7 +50,7 @@ function createFirstTheme() {
     padding: 12px 0 24px 0;
 
     font-size: rem(12);
-    border-top: 1px solid var(--color-medium-grey);
+    border-top: 1px solid #e7e7e7;
 
     &::before {
       content: '';
