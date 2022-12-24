@@ -26,6 +26,7 @@ function addTheme() {
     :width="420"
     :show-close="false"
     align-center
+    :close-on-click-modal="false"
     class="custom-dialog">
     <div class="add-theme-form">
       <label class="add-theme-form__label">Theme name:</label>

@@ -62,6 +62,7 @@ const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
                     :value="item.value"></el-option>
                 </el-select>
                 <el-icon
+                  v-if="index === 0"
                   class="icon-link"
                   @click="store.removeProperty(property[0])">
                   <Delete />

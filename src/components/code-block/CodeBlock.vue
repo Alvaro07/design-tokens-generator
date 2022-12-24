@@ -11,13 +11,9 @@ const hasProperties = computed(
 )
 
 function generateCssCode(Theme: any) {
-  console.log('Theme', Theme)
-
   numberKey++
   const properties: { name: string; value: string; type: string }[] =
     Object.values(Theme.properties)
-
-  console.log('properties', properties)
 
   return `:root {${properties
     .map((prop: any, i: number) => {
@@ -25,16 +21,17 @@ function generateCssCode(Theme: any) {
       const initPropName = store.themes[0].properties[idProp].name
       const cssProp = prop.type === 'css' && `${initPropName}: ${prop.value}`
 
-      return (
-        initPropName &&
-        prop.value &&
-        `\n \t${cssProp}${
-          Object.values(Theme.properties).length === i + 1 ? ';\n' : ';'
-        }`
-      )
+      return initPropName && prop.value && `\n \t${cssProp};`
     })
     .filter(Boolean)
-    .join('')}${'}\n\n'}`
+    .join('')}${'\n}\n\n'}`
+}
+
+function codeBlockShow(Theme: any) {
+  const fillProps = Object.values(Theme.properties).filter(
+    (prop: any) => prop.name && prop.value.length,
+  )
+  return fillProps && fillProps.length
 }
 
 // const scssTemplate = computed(() => {
@@ -58,13 +55,16 @@ function generateCssCode(Theme: any) {
     <div
       v-highlight
       class="code-block__highlight"
-      v-for="Theme in store.themes"
+      v-for="(Theme, index) in store.themes"
       :key="numberKey">
-      <h3 class="code-block__title">{{ Theme.title }}</h3>
-      <pre class="language-css"><code>{{ generateCssCode(Theme) }}
-        <!-- {{ cssTemplate }}{{ scssTemplate }} -->
-      </code>
-    </pre>
+      <section v-if="codeBlockShow(Theme)">
+        <h3 class="code-block__title">
+          <el-icon><Brush /></el-icon>
+          {{ Theme.title }}
+        </h3>
+        <pre class="language-css"><code>{{ generateCssCode(Theme) }}</code>
+        </pre>
+      </section>
     </div>
   </section>
 </template>
@@ -85,11 +85,13 @@ function generateCssCode(Theme: any) {
     margin: 0 auto 12px auto;
 
     :deep(pre) {
-      border-bottom-left-radius: 2px;
-      border-top-right-radius: 2px;
-      border-bottom-right-radius: 2px;
+      position: relative;
+      border-radius: 2px;
       font-size: 12px;
       margin: 0;
+
+      box-shadow: 6px 6px #dddddd;
+      z-index: 1;
     }
 
     :deep(code) {
@@ -98,8 +100,11 @@ function generateCssCode(Theme: any) {
   }
 
   &__title {
-    display: inline-block;
-    padding: 6px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 12px;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
 
@@ -107,6 +112,9 @@ function generateCssCode(Theme: any) {
     font-size: 14px;
     font-weight: 500;
     color: white;
+
+    box-shadow: 6px 6px #dddddd;
+    z-index: 0;
   }
 }
 </style>
