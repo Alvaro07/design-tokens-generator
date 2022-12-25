@@ -45,11 +45,11 @@ function createFirstTheme() {
 
   &__description {
     position: relative;
-    max-width: 620px;
+    max-width: 680px;
     margin: 0 auto;
     padding: 12px 0 24px 0;
 
-    font-size: rem(12);
+    font-size: rem(14);
     border-top: 1px solid #e7e7e7;
 
     &::before {

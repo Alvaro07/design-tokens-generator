@@ -22,14 +22,13 @@ export const useThemeStore = defineStore('Themes', {
     addTheme({ title }: { title: any }) {
       const newTabName = `${++this.tabIndex}`
       const isFirst = !this.themes.length
-
       let newProperties: any = {}
 
       if (!isFirst) {
         for (const prop in this.themes[0].properties) {
           newProperties[prop] = {
             value: '',
-            type: 'css',
+            type: this.themes[0].properties[prop].type,
           }
         }
       }
@@ -85,24 +84,5 @@ export const useThemeStore = defineStore('Themes', {
 
       return code
     },
-    // cssCode(state) {
-    //   const code = state.themes.map((theme) => ({
-    //     name: theme.name,
-    //     properties: Object.values(state.themes[0].properties)
-    //       .map(
-    //         (prop: any) =>
-    //           prop.name && prop.type === 'css' && `${prop.name}: ${prop.value}`,
-    //       )
-    //       .filter(Boolean),
-    //   }))
-    //   return code
-    // },
-    // sassCode(state) {
-    //   const code = Object.values(state.themes[0].properties).map(
-    //     (prop: any) =>
-    //       prop.name && prop.type === 'scss' && `${prop.name}: ${prop.value}`,
-    //   )
-    //   return code.filter(Boolean)
-    // },
   },
 })
