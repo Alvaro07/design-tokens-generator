@@ -13,7 +13,7 @@ const repeatNameTheme = computed(() =>
   store.themes.some((theme) => theme.title === themeName.value),
 )
 
-function addTheme() {
+function addTheme(): void {
   store.addTheme({ title: themeName })
   router.push({ name: 'home' })
 }

@@ -1,59 +1,81 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import 'vue-code-highlight/themes/prism-tomorrow.css'
 import { useThemeStore } from '@/stores/themes'
 
 const store = useThemeStore()
 let numberKey = 0
+const copied = ref(false)
 
-const hasProperties = computed(
-  () => Object.values(store.themes[0].properties).length,
-)
+interface Prop {
+  name: string
+  value: string
+  type: string
+}
 
-function codeBlockShow({ Theme, isFirst }: { Theme: any; isFirst: boolean }) {
+interface Theme {
+  title: string
+  name: string
+  properties: any
+}
+
+function codeBlockShow(Theme: Theme) {
   const fillProps = Object.values(Theme.properties).filter(
-    (prop: any, i) => prop.value.length,
+    (prop: any) => prop.value.length,
   )
   return fillProps && fillProps.length
 }
 
-function generateCssCode(Theme: any) {
+function generateCssCode(Theme: Theme) {
   numberKey++
   const properties: { name: string; value: string; type: string }[] =
     Object.values(Theme.properties)
 
-  return `:root {${properties
-    .map((prop: any, i: number) => {
-      const idProp = Object.keys(Theme.properties)[i]
-      const initPropName = store.themes[0].properties[idProp].name
-      const cssProp = prop.type === 'css' && `${initPropName}: ${prop.value}`
+  const hasCssProps = properties.filter((prop) => prop.type === 'css')
 
-      return initPropName && prop.value && cssProp && `\n \t${cssProp};`
-    })
-    .filter(Boolean)
-    .join('')}${'\n}\n\n'}`
+  return hasCssProps.length > 0
+    ? `:root {${properties
+        .map((prop: Prop, i: number) => {
+          const idProp = Object.keys(Theme.properties)[i]
+          const initPropName = store.themes[0].properties[idProp].name
+          const cssProp =
+            prop.type === 'css' && `${initPropName}: ${prop.value}`
+
+          return initPropName && prop.value && cssProp && `\n \t${cssProp};`
+        })
+        .filter(Boolean)
+        .join('')}${'\n}\n\n'}`
+    : null
 }
 
-function generateScssCode(Theme: any) {
+function generateScssCode(Theme: Theme) {
   numberKey++
   const properties: { name: string; value: string; type: string }[] =
     Object.values(Theme.properties)
 
   return properties
-    .map((prop: any, i: number) => {
+    .map((prop: Prop, i: number) => {
       const idProp = Object.keys(Theme.properties)[i]
       const initPropName = store.themes[0].properties[idProp].name
       const cssProp = prop.type === 'scss' && `${initPropName}: ${prop.value}`
 
-      return initPropName && prop.value && cssProp && `\n ${cssProp};`
+      return (
+        initPropName &&
+        prop.value &&
+        cssProp &&
+        `${i > 0 ? '\n' : ''} $${cssProp};`
+      )
     })
     .filter(Boolean)
     .join('')
 }
 
-async function copyCode(Theme: any) {
+async function copyCode(Theme: Theme) {
+  copied.value = true
   const code = `${generateCssCode(Theme)}${generateScssCode(Theme)}`
   await navigator.clipboard.writeText(code)
+
+  setTimeout(() => (copied.value = false), 1500)
 }
 </script>
 
@@ -62,18 +84,23 @@ async function copyCode(Theme: any) {
     <div
       v-highlight
       class="code-block__highlight"
-      v-for="(Theme, index) in store.themes"
+      v-for="Theme in store.themes"
       :key="numberKey">
-      <section v-if="codeBlockShow({ Theme, isFirst: index === 0 })">
+      <section v-if="codeBlockShow(Theme)">
         <h3 class="code-block__title">
           <el-icon><Brush /></el-icon>
           {{ Theme.title }}
         </h3>
-        <el-tooltip content="copy" placement="top" effect="light">
+
+        <el-tooltip
+          :content="!copied ? 'Copy' : 'Copied!'"
+          placement="top"
+          effect="light">
           <span class="code-block__copy-icon" @click="copyCode(Theme)">
             <el-icon><CopyDocument /></el-icon>
           </span>
         </el-tooltip>
+
         <pre
           class="language-css"
           copy><code>{{ generateCssCode(Theme) }}{{ generateScssCode(Theme) }}</code></pre>
@@ -141,7 +168,7 @@ async function copyCode(Theme: any) {
     transition: 0.3s all ease;
 
     &:hover {
-      color: #a0cfff;
+      color: var(--color-light-blue);
     }
   }
 }

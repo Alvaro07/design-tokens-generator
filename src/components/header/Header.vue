@@ -5,7 +5,7 @@ import { useThemeStore } from '@/stores/themes'
 const router = useRouter()
 const store = useThemeStore()
 
-function createFirstTheme() {
+function createTheme(): void {
   router.push({ name: 'add-theme' })
 }
 </script>
@@ -18,12 +18,8 @@ function createFirstTheme() {
       assigning the value live and exporting to the format you want, being able
       to create the themes you want, and infinite values.
     </p>
-    <el-button
-      type="primary"
-      plain
-      @click="createFirstTheme"
-      :disabled="store.themes.length > 0">
-      Create theme
+    <el-button type="primary" plain @click="createTheme">
+      {{ store.themes.length > 0 ? 'Add theme' : 'Create theme' }}
     </el-button>
     <!-- <el-button :disabled="store.themes.length > 0">Import json</el-button> -->
   </header>
